@@ -28,6 +28,25 @@ void push(stack *s, int element)
         s->st[s->top] = element;
     }
 }
+int pop(stack *s)
+{
+    if (s->top == -1)
+    {
+        printf("Stack underflow\n");
+        exit(-1);
+    }
+    else
+    {
+        return (s->st[s->top--]);
+    }
+}
+int isempty(stack *s)
+{
+    if (s->top == -1)
+        return 1;
+    else
+        return 0;
+}
 void display(stack *s)
 {
     if (s->top == -1)
@@ -48,14 +67,20 @@ void display(stack *s)
 
 int main()
 {
-    stack A, B;
+    stack A;
     create(&A);
-    create(&B);
+    printf("Elements before popping are:\n");
     push(&A, 20);
     push(&A, 30);
     push(&A, 40);
     push(&A, 50);
+    if (isempty(&A))
+    {
+        printf("Stack A is empty\n");
+        return 0;
+    }
     display(&A);
-
-    return 0;
+    printf("Elements after popping are:\n");
+    pop(&A);
+    display(&A);
 }

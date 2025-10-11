@@ -128,7 +128,7 @@ int main()
 
     do
     {
-        printf("Menu:\n");
+        printf("ARRAY OPERATIONS:\n");
         printf("1. Insert at Beginning\n");
         printf("2. Insert at End\n");
         printf("3. Insert at Any Position\n");

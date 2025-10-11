@@ -43,28 +43,71 @@ int insertion_end(int arr[], int n)
     return n + 1;
 }
 
-int insertion_any(int arr[],int n)
+int insertion_any(int arr[], int n)
 {
-    int element,position;
-    printf("Enter at which position you wanna insert from 0 to %d: ",n);
-    scanf("%d",&position);
-    if(position < 0 || position > n)
+    int element, position;
+    printf("Enter at which position you wanna insert from 0 to %d: ", n);
+    scanf("%d", &position);
+    if (position < 0 || position > n)
     {
-    printf("Invalid position!\n");
-    return n;
+        printf("Invalid position!\n");
+        return n;
     }
 
     printf("Enter the element you wanna insert: ");
     scanf("%d", &element);
 
-    for(int i = n; i>position;i--)
+    for (int i = n; i > position; i--)
     {
-        arr[i] = arr[i-1];
+        arr[i] = arr[i - 1];
     }
 
     arr[position] = element;
-    return n+1;
+    return n + 1;
+}
 
+int delete_beg(int arr[], int n)
+{
+    if (n == 0)
+    {
+        printf("Array is already empty\n");
+        return n;
+    }
+
+    for (int i = 0; i < n - 1; i++)
+    {
+        arr[i] = arr[i + 1];
+    }
+    return n - 1;
+}
+int delete_end(int arr[], int n)
+{
+    if (n == 0)
+    {
+        printf("Array is already empty\n");
+        return n;
+    }
+
+    return n - 1;
+}
+int delete_any(int arr[], int n)
+{
+    int position;
+    printf("Enter the position to delete (0 to %d): ", n - 1);
+    scanf("%d", &position);
+
+    if (position < 0 || position >= n)
+    {
+        printf("Invalid position!\n");
+        return n; 
+    }
+    printf("Deleting element: %d\n", arr[position]);
+    for (int i = position; i < n - 1; i++)
+    {
+        arr[i] = arr[i + 1];
+    }
+    arr[n - 1] = 0;
+    return n - 1;
 }
 
 int main()
@@ -80,6 +123,7 @@ int main()
     }
 
     int arr[100];
+    int choice;
 
     inputArray(arr, n);
     printf("Array elements are:\n");
@@ -89,11 +133,23 @@ int main()
     printf("Updated elements are:\n");
     displayArray(arr, n);
 
-    n = insertion_end(arr,n);
+    n = insertion_end(arr, n);
     printf("Updated elements are:\n");
     displayArray(arr, n);
 
-    n = insertion_any(arr,n);
+    n = insertion_any(arr, n);
+    printf("Updated elements are:\n");
+    displayArray(arr, n);
+
+    n = delete_beg(arr, n);
+    printf("Updated elements are:\n");
+    displayArray(arr, n);
+
+    n = delete_end(arr, n);
+    printf("Updated elements are:\n");
+    displayArray(arr, n);
+
+    n = delete_any(arr, n);
     printf("Updated elements are:\n");
     displayArray(arr, n);
 

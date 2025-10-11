@@ -1,5 +1,4 @@
 #include <stdio.h>
-
 void inputArray(int arr[], int n)
 {
     printf("Enter %d elements:\n", n);
@@ -99,7 +98,7 @@ int delete_any(int arr[], int n)
     if (position < 0 || position >= n)
     {
         printf("Invalid position!\n");
-        return n; 
+        return n;
     }
     printf("Deleting element: %d\n", arr[position]);
     for (int i = position; i < n - 1; i++)
@@ -123,35 +122,68 @@ int main()
     }
 
     int arr[100];
+    inputArray(arr, n);
     int choice;
 
-    inputArray(arr, n);
-    printf("Array elements are:\n");
-    displayArray(arr, n);
 
-    n = insertion_beg(arr, n);
-    printf("Updated elements are:\n");
-    displayArray(arr, n);
+    do
+    {
+        printf("Menu:\n");
+        printf("1. Insert at Beginning\n");
+        printf("2. Insert at End\n");
+        printf("3. Insert at Any Position\n");
+        printf("4. Delete from Beginning\n");
+        printf("5. Delete from End\n");
+        printf("6. Delete at Any Position\n");
+        printf("7. Display Array\n");
+        printf("8. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-    n = insertion_end(arr, n);
-    printf("Updated elements are:\n");
-    displayArray(arr, n);
+        switch (choice)
+        {
+        case 1:
+            n = insertion_beg(arr, n);
+            printf("Updated array:\n");
+            displayArray(arr, n);
+            break;
+        case 2:
+            n = insertion_end(arr, n);
+            printf("Updated array:\n");
+            displayArray(arr, n);
+            break;
+        case 3:
+            n = insertion_any(arr, n);
+            printf("Updated array:\n");
+            displayArray(arr, n);
+            break;
+        case 4:
+            n = delete_beg(arr, n);
+            printf("Updated array:\n");
+            displayArray(arr, n);
+            break;
+        case 5:
+            n = delete_end(arr, n);
+            printf("Updated array:\n");
+            displayArray(arr, n);
+            break;
+        case 6:
+            n = delete_any(arr, n);
+            printf("Updated array:\n");
+            displayArray(arr, n);
+            break;
+        case 7:
+            printf("Array elements are:\n");
+            displayArray(arr, n);
+            break;
+        case 8:
+            printf("Exiting program.\n");
+            break;
+        default:
+            printf("Invalid choice\n");
+        }
 
-    n = insertion_any(arr, n);
-    printf("Updated elements are:\n");
-    displayArray(arr, n);
-
-    n = delete_beg(arr, n);
-    printf("Updated elements are:\n");
-    displayArray(arr, n);
-
-    n = delete_end(arr, n);
-    printf("Updated elements are:\n");
-    displayArray(arr, n);
-
-    n = delete_any(arr, n);
-    printf("Updated elements are:\n");
-    displayArray(arr, n);
+    } while (choice != 8);
 
     return 0;
 }

@@ -1,41 +1,45 @@
 #include <stdio.h>
 #include <stdlib.h>
-struct Node
+struct node
 {
     int data;
-    struct Node *next;
+    struct node *next;
 };
-void InsertionFront(struct Node **headref, int val)
+struct node *createnode(int value)
 {
-    struct Node *new_Node = (struct Node *)malloc(sizeof(struct Node));
-    new_Node->data = val;
-    new_Node->next = *headref;
-    *headref = new_Node;
-
-   // void Insertion_End(struct Node * *tailref, int val)
-   
+    struct node *newnode = (struct node *)malloc(sizeof(struct node));
+    newnode->data = value;
+    newnode->next = NULL;
+    return newnode;
 }
-void printLinkedList(struct Node *head)
+void printlist(struct node *head)
 {
-    struct Node *temp = head;
-    while (temp != NULL)
+    struct node *tail = head;
+    printf("Linked List: ");
+    while (tail != NULL)
     {
-        printf("%d ->", temp->data);
-        temp = temp->next;
+        printf("%d -> ", tail->data);
+        tail = tail->next;
     }
     printf("NULL\n");
 }
 int main()
 {
-    struct Node *head = NULL;
-    struct Node *tail = NULL;
-
-    // head = (struct Node *)malloc(sizeof(struct Node ));
-    // tail = (struct Node *)malloc(sizeof(struct Node));
-
-    insertionAtFront(&head, 3);
-    insertionAtFront(&head, 2);
-    insertionAtFront(&head, 1);
-    printLinkedList(head);
+    int n, value;
+    struct node *head = NULL, *tail = NULL;
+    printf("Enter the number of node you wanna create: \n");
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++)
+    {
+        printf("Enter the value for node %d: ", i + 1);
+        scanf("%d", &value);
+        struct node *newnode = createnode(value);
+        if (head == NULL)
+            head = newnode;
+        else
+            tail->next = newnode;
+        tail = newnode;
+    }
+    printlist(head);
     return 0;
 }

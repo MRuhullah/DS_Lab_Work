@@ -80,7 +80,7 @@ struct node *delete_beg(struct node *head)
     free(temp);
     return head;
 }
-struct node* delete_end(struct node* head)
+ struct node* delete_end(struct node* head)
 {
     if (head == NULL)
     {

@@ -3,7 +3,7 @@
 void bubblesort(int array[], int m)
 {
     for (int i = 0; i < m - 1; i++)
-    {
+    { int flag = 0;
         for (int j = 0; j < m - i - 1; j++)
         {
             if (array[j] > array[j + 1])
@@ -11,7 +11,13 @@ void bubblesort(int array[], int m)
                 int temp = array[j];
                 array[j] = array[j + 1];
                 array[j + 1] = temp;
+                flag = 1;
             }
+        }
+        if(flag == 0)
+        {  
+            printf("Exited with %d pass\n",i);
+            break;
         }
     }
 }

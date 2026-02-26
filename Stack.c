@@ -1,65 +1,63 @@
 #include <stdio.h>
-#include <stdlib.h>
+#define MAX 50
 
-#define MAXSIZE 100
+int stack[MAX];
+int top = -1;
 
-struct lifo
+void push()
 {
-    int st[MAXSIZE];
-    int top;
-};
-
-void create(struct lifo *s)
-{
-    s->top = -1;
+    int value;
+    if (top == MAX - 1)
+    {
+        printf("Stack Overflow! Cannot push.\n");
+    }
+    else
+    {
+        printf("Enter value to push: ");
+        scanf("%d", &value);
+        top++;
+        stack[top] = value;
+        printf("%d pushed into stack.\n", value);
+    }
 }
 
-void push(struct lifo *s, int element)
+void pop()
 {
-    if (s->top == MAXSIZE - 1)
+    if (top == -1)
     {
-        printf("Stack Overflow!\n");
-        return;
+        printf("Stack Underflow! Stack is empty.\n");
     }
-    s->top++;
-    s->st[s->top] = element;
+    else
+    {
+        printf("%d popped from stack.\n", stack[top]);
+        top--;
+    }
 }
 
-int pop(struct lifo *s)
+void display()
 {
-    if (s->top == -1)
+    int i;
+    if (top == -1)
     {
-        printf("Stack Underflow!\n");
-        return -1;
+        printf("Stack is empty.\n");
     }
-    return s->st[s->top--];
-}
-
-void display(struct lifo *s)
-{
-    if (s->top == -1)
+    else
     {
-        printf("Stack is empty\n");
-        return;
-    }
-
-    printf("Stack elements are:\n");
-    for (int i = 0; i <= s->top; i++)
-    {
-        printf("%d\n", s->st[i]);
+        printf("Stack elements are:\n");
+        for (i = top; i >= 0; i--)
+        {
+            printf("%d\n", stack[i]);
+        }
     }
 }
 
 int main()
 {
-    struct lifo s;
-    int choice, value;
+    int choice;
 
-    create(&s);
-
-    while (1)
+    do
     {
-        printf("\n--- STACK MENU ---\n");
+        printf("STACK MENU\n");
         printf("1. Push\n");
         printf("2. Pop\n");
         printf("3. Display\n");
@@ -70,28 +68,21 @@ int main()
         switch (choice)
         {
         case 1:
-            printf("Enter element to push: ");
-            scanf("%d", &value);
-            push(&s, value);
+            push();
             break;
-
         case 2:
-            value = pop(&s);
-            if (value != -1)
-                printf("Popped element: %d\n", value);
+            pop();
             break;
-
         case 3:
-            display(&s);
+            display();
             break;
-
         case 4:
-            exit(0);
-
+            printf("Exiting program.\n");
+            break;
         default:
-            printf("Invalid choice!\n");
+            printf("Invalid choice! Try again.\n");
         }
-    }
+    } while (choice != 4);
 
     return 0;
 }

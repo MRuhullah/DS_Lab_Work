@@ -1,67 +1,78 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Node
+struct node
 {
     int data;
-    struct Node *next;
+    struct node *next;
 };
 
-struct Queue
-{
-    struct Node *front;
-    struct Node *rear;
-};
+struct node *front = NULL;
+struct node *rear = NULL;
 
-void enqueue(struct Queue *q, int value)
+void enqueue()
 {
-    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
-    if (!newNode)
+    int value;
+
+    struct node *newNode = (struct node *)malloc(sizeof(struct node));
+    if (newNode == NULL)
     {
-        printf("Memory allocation failed\n");
+        printf("Memory allocation failed!\n");
         return;
     }
+
+    printf("Enter value to enqueue: ");
+    scanf("%d", &value);
+
     newNode->data = value;
     newNode->next = NULL;
 
-    if (q->rear == NULL)
+    if (front == NULL)
     {
-        q->front = q->rear = newNode;
+        front = rear = newNode;
     }
     else
     {
-        q->rear->next = newNode;
-        q->rear = newNode;
+        rear->next = newNode;
+        rear = newNode;
     }
+
+    printf("%d inserted into queue.\n", value);
 }
 
-int dequeue(struct Queue *q)
+void dequeue()
 {
-    if (q->front == NULL)
+    struct node *temp;
+
+    if (front == NULL)
     {
-        printf("Queue underflow! Cannot dequeue.\n");
-        return -1;
+        printf("Queue Underflow! Cannot dequeue.\n");
+        return;
     }
-    struct Node *temp = q->front;
-    int value = temp->data;
-    q->front = q->front->next;
-    if (q->front == NULL)
-    {
-        q->rear = NULL;
-    }
+
+    temp = front;
+    printf("Deleted element: %d\n", temp->data);
+
+    front = front->next;
+
+    if (front == NULL)
+        rear = NULL;
+
     free(temp);
-    return value;
 }
 
-void display(struct Queue *q)
+void display()
 {
-    if (q->front == NULL)
+    struct node *temp;
+
+    if (front == NULL)
     {
         printf("Queue is empty.\n");
         return;
     }
+
     printf("Queue elements: ");
-    struct Node *temp = q->front;
+    temp = front;
     while (temp != NULL)
     {
         printf("%d ", temp->data);
@@ -70,69 +81,38 @@ void display(struct Queue *q)
     printf("\n");
 }
 
-void createQueue(struct Queue *q)
-{
-    int n, value;
-    printf("Enter number of elements to create queue: ");
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++)
-    {
-        printf("Enter element %d: ", i + 1);
-        scanf("%d", &value);
-        enqueue(q, value);
-    }
-    printf("Queue created successfully.\n");
-}
-
 int main()
 {
-    struct Queue q = {NULL, NULL};
-    int choice, value;
+    int choice;
 
-    while (1)
+    do
     {
-        printf(" Queue Menu\n");
-        printf("1. Create Queue\n");
-        printf("2. Enqueue\n");
-        printf("3. Dequeue\n");
-        printf("4. Display Queue\n");
-        printf("5. Exit\n");
+        printf("QUEUE MENU\n");
+        printf("1. Enqueue\n");
+        printf("2. Dequeue\n");
+        printf("3. Display\n");
+        printf("4. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
         switch (choice)
         {
         case 1:
-
-            while (q.front != NULL)
-            {
-                dequeue(&q);
-            }
-            createQueue(&q);
+            enqueue();
             break;
         case 2:
-            printf("Enter value to enqueue: ");
-            scanf("%d", &value);
-            enqueue(&q, value);
+            dequeue();
             break;
         case 3:
-            value = dequeue(&q);
-            if (value != -1)
-                printf("Dequeued value: %d\n", value);
+            display();
             break;
         case 4:
-            display(&q);
+            printf("Exiting program.\n");
             break;
-        case 5:
-
-            while (q.front != NULL)
-            {
-                dequeue(&q);
-            }
-            printf("Exiting...\n");
-            return 0;
         default:
             printf("Invalid choice! Try again.\n");
         }
-    }
+    } while (choice != 4);
+
+    return 0;
 }

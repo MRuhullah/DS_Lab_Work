@@ -7,7 +7,9 @@ struct Node
     struct Node *next;
 };
 
-void push(struct Node **top, int value)
+struct Node *top = NULL;
+
+void push(int value)
 {
     struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
     if (!newNode)
@@ -16,25 +18,25 @@ void push(struct Node **top, int value)
         return;
     }
     newNode->data = value;
-    newNode->next = *top;
-    *top = newNode;
+    newNode->next = top;
+    top = newNode;
 }
 
-int pop(struct Node **top)
+int pop()
 {
-    if (*top == NULL)
+    if (top == NULL)
     {
         printf("Stack underflow! Cannot pop.\n");
         return -1;
     }
-    struct Node *temp = *top;
+    struct Node *temp = top;
     int poppedValue = temp->data;
-    *top = (*top)->next;
+    top = top->next;
     free(temp);
     return poppedValue;
 }
 
-void display(struct Node *top)
+void display()
 {
     if (top == NULL)
     {
@@ -51,7 +53,7 @@ void display(struct Node *top)
     printf("\n");
 }
 
-void createStack(struct Node **top)
+void createStack()
 {
     int n, value;
     printf("Enter the number of elements to create stack: ");
@@ -61,19 +63,18 @@ void createStack(struct Node **top)
     {
         printf("Enter element %d: ", i + 1);
         scanf("%d", &value);
-        push(top, value);
+        push(value);
     }
     printf("Stack created successfully.\n");
 }
 
 int main()
 {
-    struct Node *stack = NULL;
     int choice, value;
 
     while (1)
     {
-        printf("Stack Menu\n");
+        printf("\nStack Menu\n");
         printf("1. Create Stack\n");
         printf("2. Push\n");
         printf("3. Pop\n");
@@ -85,24 +86,24 @@ int main()
         switch (choice)
         {
         case 1:
-            createStack(&stack);
+            createStack();
             break;
         case 2:
             printf("Enter value to push: ");
             scanf("%d", &value);
-            push(&stack, value);
+            push(value);
             break;
         case 3:
-            value = pop(&stack);
+            value = pop();
             if (value != -1)
                 printf("Popped value: %d\n", value);
             break;
         case 4:
-            display(stack);
+            display();
             break;
         case 5:
-            while (stack != NULL)
-                pop(&stack);
+            while (top != NULL)
+                pop();
             printf("Exiting...\n");
             return 0;
         default:
